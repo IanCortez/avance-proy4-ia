@@ -50,27 +50,13 @@ vector<lb> softmax(vector<lb> vect){
 
 void forw(vector<layer> &nn,int &n){
     for(int i=0;i<n-1;i++){
-        vector<lb> in_for_next(nn[i+1].n,0);
-        int sz=nn[i].b.size();
-        //cout<<sz<<'\n';
-
+        vector<lb> in_for_next;
         for(int j=0;j<nn[i+1].n;j++){
-            for(int k=0;k<nn[i].n;k++){
-                //n[i].x
-                vector<lb> transpuesta;
-                /*
-                for(int j=0;j<nn[i].n;j++){
-                    transpuesta.push_back(nn[i+1].w[j][0]);
-                }*/
-                cout<<nn[i].x.size()<<' '<<nn[i].w[j].size()<<' '<<nn[i].b[j]<<'\n';
-                barra();
-                in_for_next.push_back(activ(nn[i].x[j]*nn[i].w[j][0]+nn[i].b[j]));
-            }
+            cout<<nn[i].x.size()<<' '<<nn[i+1].w[j].size()<<' '<<nn[i+1].b[j]<<'\n';
+            barra();
+            in_for_next.push_back(activ(h(nn[i].x,nn[i+1].w[j],nn[i+1].b[j])));
         }
-        //for(auto &x:in_for_next) cout<<x<<' ';
-        //cout<<'\n';
-        //nn[i+1].x=in_for_next;
-        break;
+        nn[i+1].x=in_for_next;
     }
     cout<<"here"<<'\n';
 }
@@ -132,5 +118,5 @@ int main(){
         cout<<nn[i].b.size()<<'\n';
         barra();
     }
-    //forw(nn,n);
+    forw(nn,n);
 }
